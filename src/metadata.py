@@ -1,0 +1,7 @@
+MODELS_FOLDER = "models"
+DATASETS_FOLDER = "datasets"
+
+COLUMNS_TO_DROP = []
+MODEL_PARAMS = {
+    
+}
