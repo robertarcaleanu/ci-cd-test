@@ -1,6 +1,6 @@
 import joblib
 from datetime import datetime
-from src.metadata import MODELS_FOLDER
+from pipeline.src.metadata import MODELS_FOLDER
 
 def store_model(model, model_name: str) -> None:
     timestamp = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')

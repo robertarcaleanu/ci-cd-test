@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-from src.metadata import MODEL_PARAMS
+from pipeline.src.metadata import MODEL_PARAMS
 
 def train_model(df: pd.DataFrame, target_column: str) -> LogisticRegression:
     X = df.drop(columns=[target_column])

@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder
-from src.metadata import COLUMNS_TO_DROP, BINARY_FEATURES, ONE_HOT_ENCODE_COLUMNS
+from pipeline.src.metadata import COLUMNS_TO_DROP, BINARY_FEATURES, ONE_HOT_ENCODE_COLUMNS
 
 
 class Transformer:
