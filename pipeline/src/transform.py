@@ -1,6 +1,10 @@
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder
-from pipeline.src.metadata import COLUMNS_TO_DROP, BINARY_FEATURES, ONE_HOT_ENCODE_COLUMNS
+from pipeline.src.metadata import (
+    COLUMNS_TO_DROP,
+    BINARY_FEATURES,
+    ONE_HOT_ENCODE_COLUMNS,
+)
 
 
 class Transformer:
@@ -40,20 +44,23 @@ class Transformer:
         df["month"] = df["month"].map(month_mapping)
 
         return df
-    
+
     def _one_hot_encoding(self, df: pd.DataFrame) -> pd.DataFrame:
-        encoder = OneHotEncoder(drop='first', sparse_output=False).set_output(transform="pandas")
+        encoder = OneHotEncoder(drop="first", sparse_output=False).set_output(
+            transform="pandas"
+        )
         encoder.fit(df[ONE_HOT_ENCODE_COLUMNS])
         encoded_df = encoder.transform(df[ONE_HOT_ENCODE_COLUMNS])
         df = df.drop(columns=ONE_HOT_ENCODE_COLUMNS)
         df = pd.concat([df, encoded_df], axis=1)
 
         return df
-    
+
+
 def balance_dataset(df: pd.DataFrame) -> pd.DataFrame:
     # Separate the classes
-    df_y0 = df[df['y'] == 'no'].copy()
-    df_y1 = df[df['y'] == 'yes'].copy()
+    df_y0 = df[df["y"] == "no"].copy()
+    df_y1 = df[df["y"] == "yes"].copy()
 
     # Find the smaller class size
     min_size = len(df_y1)
