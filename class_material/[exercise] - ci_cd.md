@@ -26,7 +26,7 @@
 1. Within the `tests/` folder create a `test_transformer.py` file, and define some tests for the transformer.
     - *Optional*: you can do as many tests as you want for the transformer.
     - *Optional*: test other parts of the code (e.g. load, save, etc.).
-2. Save the files and run the tests. Open a terminal and run `pytest tests/`. (This will run all the tests withi the `tests/` folder, but you could specify the file to be tested by defining the complete file path).
+2. Save the files and run the tests. Open a terminal and run `pytest tests/`. (This will run all the tests within the `tests/` folder, but you could specify the file to be tested by defining the complete file path).
 3. Check if tests are passed, if not review the issues.
 
 
@@ -44,32 +44,32 @@
 2. Within the `.github/workflows/` folder create a file called `ci.yaml`
 3. Within the `ci.yaml` define the continuous integration workflow, which needs to have the parameters listed below:
     - Workflow name: Continuous Integration - {YOUR NAME}
-    - Runs on: pull request to the main branch
+    - Runs on: pull request to the `main` branch
     - Job name: test-and-format
     - Job runs on: ubuntu-latest
-    - Create token to allow commits to the repository (permissions)
-    - Configure credentials and environment variables
+    - Configure `write` permissions for the workflow
+    - Configure the `GITHUB_TOKEN`  and `BRANCH_NAME` (`BRANCH_NAME: ${{ github.head_ref || github.ref_name }}`) environment variable
     - Job steps:
         - Checkout repository
         - Set up Python (keep in mind what Python version is being used during the development)
-        - Install dependencies
-        - Run tests with pytest. At least 3 unit tests are required.
+        - Install dependencies from `requirements.txt`
+        - Run tests with pytest
         - Format code with black
-        - Commit and push changes. The commit message must be chore: format code with black
+        - Commit and push changes. The commit message must be `chore: format code with black`
 4. Within the `.github/workflows/` folder create a file called `cd.yaml`
 5. Within the `cd.yaml` define the continuous deployment workflow, which needs to have the parameters listed below:
     - Workflow name: Continuous Deployment - {YOUR NAME}
     - Runs on: push to the main branch or every sunday at mid-night
-    - Job name: test-and-format
+    - Job name: deployment
     - Job runs on: ubuntu-latest
-    - Allow github action to write to the repository (permissions)
-    - Configure credentials and environment variables
+    - Configure `write` permissions for the workflow
+    - Configure the `GITHUB_TOKEN` environment variable
     - Job steps:
         - Checkout repository
-        - Set up Python
-        - Install dependencies
-        - Train the model with the dataset available in the /cd_dataset folder
-        - Store the model in the /models folder. The model name must be in the format model_{current_date}, where current_date is in YYYY-MM-DD format.
+        - Set up Python (keep in mind what Python version is being used during the development)
+        - Install dependencies from `requirements.txt`
+        - Execute the main script
+        - Commit and push changes. The commit message must be `chore: generated new model`
 
 
 
@@ -83,4 +83,11 @@
     - If so, check what changes has been made with the CI and then move to the following step
     - If not, check what went wrong and try to fix it. In the remove pull everthing from the remote (`git push orign {FEATURE BRANCH}`), fix the issues and repeat again from step 1.
 7. On the `Pull Request`, merge the PR into the main branch. Then, go to the `Actions` tab and check if the CI has been executed successfully.
-    - If 
+    - If so, check the models folder for the new created model.
+    - If not, it is necessary to troubleshoot the problem. The steps that can be followed are:
+        * Check the Github Action execution and understand the error.
+        * In VSCode switch to the main branch and pull the data (`git checkout main` and then `git pull origin main`).
+        * Fix the issues with the CD workflow.
+        * Save the changes and push them to the remote (`git add .`, `git commit -m '{MESSAGE}'`, `git push origin main`).
+        * Then go to the Github UI and check the CD Github action.
+        * Repeat this process until the issues are solved.
