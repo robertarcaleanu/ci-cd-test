@@ -8,6 +8,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Ensure the workflow has permission to push commits
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       # Checkout code from repository
@@ -28,3 +32,12 @@ jobs:
       # Run main.py
       - name: Run main.py
         run: python main.py
+
+      # Commit and push the model back to the repository
+      - name: Save the model
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add pipeline/models/* 
+          git commit -m "Update trained model" || echo "No changes to commit"
+          git push origin main
