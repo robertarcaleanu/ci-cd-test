@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder
-from pipeline.src.metadata import (
+from metadata import (
     COLUMNS_TO_DROP,
     BINARY_FEATURES,
     ONE_HOT_ENCODE_COLUMNS,

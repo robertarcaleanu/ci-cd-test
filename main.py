@@ -1,8 +1,8 @@
-from pipeline.src.load import load_data
-from pipeline.src.transform import Transformer, balance_dataset
-from pipeline.src.train import train_model
-from pipeline.src.store import store_model
-from pipeline.src.metadata import MODEL_NAME
+from src.load import load_data
+from src.transform import Transformer, balance_dataset
+from src.train import train_model
+from src.store import store_model
+from metadata import MODEL_NAME
 
 
 def main():

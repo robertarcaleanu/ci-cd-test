@@ -1,5 +1,5 @@
 import pandas as pd
-from pipeline.src.metadata import DATASETS_FOLDER
+from metadata import DATASETS_FOLDER
 
 
 def load_data(file_name: str) -> pd.DataFrame:

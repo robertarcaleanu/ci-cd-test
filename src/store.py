@@ -1,6 +1,6 @@
 import joblib
 from datetime import datetime
-from pipeline.src.metadata import MODELS_FOLDER
+from metadata import MODELS_FOLDER
 
 
 def store_model(model, model_name: str) -> None:
