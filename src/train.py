@@ -2,9 +2,12 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from metadata import MODEL_PARAMS
+import logging
 
+logger = logging.getLogger(__name__)
 
 def train_model(df: pd.DataFrame, target_column: str) -> LogisticRegression:
+    logger.info("Traninig LR model...")
     X = df.drop(columns=[target_column])
     y = df[target_column]
 
@@ -13,5 +16,6 @@ def train_model(df: pd.DataFrame, target_column: str) -> LogisticRegression:
     )
     model = LogisticRegression(**MODEL_PARAMS)  # Increase max_iter if needed
     model.fit(X_train, y_train)
+    logger.info("Traninig has been completed...")
 
     return model

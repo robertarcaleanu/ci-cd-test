@@ -5,7 +5,9 @@ from metadata import (
     BINARY_FEATURES,
     ONE_HOT_ENCODE_COLUMNS,
 )
+import logging
 
+logger = logging.getLogger(__name__)
 
 class Transformer:
     def __init__(self):
@@ -14,10 +16,12 @@ class Transformer:
         self.one_hot_encoding_columns = ONE_HOT_ENCODE_COLUMNS
 
     def transform(self, df: pd.DataFrame) -> pd.DataFrame:
+        logger.info("Starting dataset transformation...")
         df = df.drop(self.drop_columns, axis=1)
         df = self._map_binary_column_to_int(df)
         df = self._map_month_to_int(df)
         df = self._one_hot_encoding(df)
+        logger.info("Dataset transformation completed...")
 
         return df
 
@@ -58,6 +62,7 @@ class Transformer:
 
 
 def balance_dataset(df: pd.DataFrame) -> pd.DataFrame:
+    logger.info("Balancing dataset...")
     # Separate the classes
     df_y0 = df[df["y"] == "no"].copy()
     df_y1 = df[df["y"] == "yes"].copy()
